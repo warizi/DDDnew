@@ -2,6 +2,7 @@
 
 import { Link, useLocation } from "react-router-dom";
 import { SidebarItemProps } from "../model/type";
+import { SidebarItemStyle } from "./style";
 
 function SidebarItem({
   to,
@@ -12,8 +13,8 @@ function SidebarItem({
 
   return (
     <li>
-      <Link to={to}>
-        <div>
+      <Link to={to} css={SidebarItemStyle.link}>
+        <div css={SidebarItemStyle.container(isActive)}>
           {name}
         </div>
       </Link>
