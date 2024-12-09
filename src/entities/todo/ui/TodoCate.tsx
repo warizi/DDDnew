@@ -9,6 +9,8 @@ import { TodoQueryKey } from "../api/todoQueryKey";
 import useDeleteTodoCate from "../model/useDeleteTodoCate";
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
+import { useRecoilState } from "recoil";
+import SelectedTodoCateStore from "@shared/store/todo/model/SelectedTodoCateStore";
 
 const TodoCateStyle = {
   container: {
@@ -23,7 +25,7 @@ const TodoCateStyle = {
     padding: "0 10px",
     margin: "0",
     stroke: "#000",
-    borderRadius: "10px",
+    // borderRadius: "10px",
     fontSize: "16px",
     backgroundColor: "#fff",
     ":hover": {
@@ -65,6 +67,7 @@ function TodoCate({
   const queryClient = useQueryClient();
   const { mutate: updateTodoCate } = useUpdateTodoCate();
   const { mutate: deleteTodoCate } = useDeleteTodoCate();
+  const [ selectedTodoCate, setSelectedTodoCate ] = useRecoilState(SelectedTodoCateStore);
 
   const { setNodeRef, attributes, listeners, transform, transition, isDragging } = useSortable({
     id: data.id,
@@ -123,8 +126,6 @@ function TodoCate({
       <div
         css={{...TodoCateStyle.container, ...TodoCateStyle.dragging}}
         ref={setNodeRef}
-        // {...attributes}
-        // {...listeners}
         style={style}
       >
 
@@ -134,13 +135,20 @@ function TodoCate({
 
   return (
     <div 
-      css={TodoCateStyle.container}
+      css={{
+        ...TodoCateStyle.container,
+        ...(selectedTodoCate === data.id ? {backgroundColor: "#f0f0f0"} : {})
+      }}
       ref={setNodeRef}
       {...attributes}
       {...listeners}
       style={style}
     >
-      <ListBullet />
+      <div
+        onClick={onEditModeStart}
+      >
+        <ListBullet />
+      </div>
       {
         isEditMode ? (
           <input 
@@ -153,7 +161,7 @@ function TodoCate({
         ) : (
           <span 
             css={TodoCateStyle.span}
-            onClick={onEditModeStart}
+            onClick={() => setSelectedTodoCate(Number(data.id))}
           >
             {name}
           </span>

@@ -1,9 +1,8 @@
 /** @jsxImportSource @emotion/react */
 
-import { SortableContext, useSortable } from "@dnd-kit/sortable";
+import { SortableContext } from "@dnd-kit/sortable";
 import { TodoCate } from "@entities/todo";
 import { TodoCategoryType } from "@shared/db";
-import {CSS} from "@dnd-kit/utilities";
 import { Id } from "@shared/db/model/types";
 
 const containerStyle = {

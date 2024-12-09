@@ -9,7 +9,8 @@ const getTodoCategories = async () => {
 
 const createTodoCategory = async (todoCategory: TodoCategoryInputType) => {
   const resAll = await getTodoCategories();
-  const rastTodoCate = resAll[resAll.length - 1];
+  const sortByOrder = resAll.sort((a, b) => a.order - b.order);
+  const rastTodoCate = sortByOrder[resAll.length - 1];
 
   todoCategory.order = rastTodoCate ? rastTodoCate.order + 1000 : 1000;
   

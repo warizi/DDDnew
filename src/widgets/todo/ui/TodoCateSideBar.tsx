@@ -6,7 +6,7 @@ import { DndContext, DragOverlay } from "@dnd-kit/core";
 import useListTodoDnd from "../model/useListTodoDnD";
 import { createPortal } from "react-dom";
 import { TodoCate } from "@entities/todo";
-import { TodoCategoryInputType, TodoCategoryType } from "@shared/db";
+import { TodoCategoryType } from "@shared/db";
 
 function TodoCateSideBar() {
   const {
