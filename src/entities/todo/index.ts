@@ -14,6 +14,8 @@ import useUpdateTodo from "./model/useUpdateTodo";
 import useDeleteTodo from "./model/useDeleteTodo";
 import useAllTodos from "./model/useAllTodos";
 
+import TodoCate from "./ui/TodoCate";
+
 export {
   useAllTodoCates,
   useGetTodoCate,
@@ -29,5 +31,6 @@ export {
   useCreateTodo,
   useUpdateTodo,
   useDeleteTodo,
-  useAllTodos
+  useAllTodos,
+  TodoCate
 }
