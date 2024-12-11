@@ -15,6 +15,7 @@ import useDeleteTodo from "./model/useDeleteTodo";
 import useAllTodos from "./model/useAllTodos";
 
 import TodoCate from "./ui/TodoCate";
+import TodoCol from "./ui/TodoCol";
 
 export {
   useAllTodoCates,
@@ -32,5 +33,6 @@ export {
   useUpdateTodo,
   useDeleteTodo,
   useAllTodos,
-  TodoCate
+  TodoCate,
+  TodoCol
 }

@@ -11,51 +11,7 @@ import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 import { useRecoilState } from "recoil";
 import SelectedTodoCateStore from "@shared/store/todo/model/SelectedTodoCateStore";
-
-const TodoCateStyle = {
-  container: {
-    display: "flex",
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-    gap: "10px",
-    width: "100%",
-    height: "40px",
-    lineHeight: "40px",
-    padding: "0 10px",
-    margin: "0",
-    stroke: "#000",
-    // borderRadius: "10px",
-    fontSize: "16px",
-    backgroundColor: "#fff",
-    ":hover": {
-      backgroundColor: "#f0f0f0",
-      cursor: "pointer"
-    }
-  } as const,
-  dragging: {
-    backgroundColor: "#f0f0f0",
-    cursor: "pointer",
-    border: "1px dashed #000",
-  },
-  input: {
-    fontSize: "16px",
-    width: "100%",
-  } as const,
-  span: {
-    fontSize: "16px",
-    width: "100%",
-  } as const,
-  deleteBtn: {
-    stroke: "#000",
-    cursor: "pointer",
-    opacity: 0,
-    ":hover": {
-      opacity: 1,
-      backgroundColor: "#f5f5f5",
-    }
-  } as const,
-}
+import { TodoCateStyle } from "./TodoCate.style";
 
 function TodoCate({
   data
@@ -137,7 +93,7 @@ function TodoCate({
     <div 
       css={{
         ...TodoCateStyle.container,
-        ...(selectedTodoCate === data.id ? {backgroundColor: "#f0f0f0"} : {})
+        ...(selectedTodoCate.id === data.id ? {backgroundColor: "#5C6B8A"} : {})
       }}
       ref={setNodeRef}
       {...attributes}
@@ -161,7 +117,7 @@ function TodoCate({
         ) : (
           <span 
             css={TodoCateStyle.span}
-            onClick={() => setSelectedTodoCate(Number(data.id))}
+            onClick={() => setSelectedTodoCate(data)}
           >
             {name}
           </span>

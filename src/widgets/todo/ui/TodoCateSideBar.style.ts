@@ -4,10 +4,15 @@ export const TodoCateSideBarStyle = {
     display: "flex",
     flexDirection: "column",
     justifyContent: "space-between",
-    width: "220px",
-    height: "calc(100vh - 50px)",
-    backgroundColor: "white",
+    width: "100%",
+    backgroundColor: "#545E6F",
     boxShadow: "0px 1px 4px rgba(0, 0, 0, 0.1)",
-    padding: "10px 0 0 0"
+    overflow: "hidden",
+    transition: "height 0.3s ease",
   } as const,
+  innerContainer: {
+    display: "flex",
+    flexDirection: "column",
+    justifyContent: "space-between",
+  } as const
 }

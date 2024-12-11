@@ -1,8 +1,8 @@
 /** @jsxImportSource @emotion/react */
 
 const Container = {
-  width: "30px",
-  height: "30px",
+  width: "20px",
+  height: "20px",
 }
 
 const PlusIcon = () => {

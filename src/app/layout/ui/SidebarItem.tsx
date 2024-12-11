@@ -3,6 +3,7 @@
 import { Link, useLocation } from "react-router-dom";
 import { SidebarItemProps } from "../model/type";
 import { SidebarItemStyle } from "./style";
+import { TodoCateSideBar } from "@widgets/todo";
 
 function SidebarItem({
   to,
@@ -10,6 +11,7 @@ function SidebarItem({
 }: SidebarItemProps) {
   const { pathname } = useLocation();
   const isActive = pathname === to;
+  const isTodo = pathname.includes('/todo') && to.includes('/todo');
 
   return (
     <li>
@@ -18,6 +20,7 @@ function SidebarItem({
           {name}
         </div>
       </Link>
+      <TodoCateSideBar isActive={isTodo}/>
     </li>
   );
 };

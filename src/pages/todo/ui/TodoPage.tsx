@@ -1,11 +1,13 @@
 /** @jsxImportSource @emotion/react */
 
-import TodoCateSideBar from "@widgets/todo/ui/TodoCateSideBar";
+import { TodoHeader } from "@features/todo";
+import { TodoContents } from "@widgets/todo";
 
 export const TodoPage = () => {
   return (
     <div>
-      <TodoCateSideBar />
+      <TodoHeader />
+      <TodoContents />
     </div>
   );
 };

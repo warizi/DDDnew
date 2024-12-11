@@ -7,6 +7,9 @@ import SidebarItem from "./SidebarItem";
 function Sidebar() {
   return (
     <div css={SidebarStyle.constainer}>
+      <div css={SidebarStyle.logo}>
+        <h1>DDD</h1>
+      </div>
       <nav css={SidebarStyle.nav}>
         <ul>
           {

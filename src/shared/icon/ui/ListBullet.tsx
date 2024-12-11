@@ -1,8 +1,8 @@
 /** @jsxImportSource @emotion/react */
 
 const listBulletStyle = {
-  width: "30px",
-  height: "30px",
+  width: "25px",
+  height: "25px",
 }
 
 const ListBullet = () => {

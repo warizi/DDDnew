@@ -31,7 +31,9 @@ function CreateTodoCateBtn() {
       onClick={handleCreateTodoCate}
       disabled={isPending}
     >
-      <PlusIcon />
+      <div>
+        <PlusIcon />
+      </div>
       Add Todo Category
     </button>
   );

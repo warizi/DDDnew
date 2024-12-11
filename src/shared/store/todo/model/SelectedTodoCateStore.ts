@@ -1,8 +1,9 @@
+import { TodoCategoryType } from "@shared/db";
 import { atom } from "recoil";
 
 const SelectedTodoCateStore = atom({
   key: "SelectedTodoCateStore",
-  default: 0,
+  default: {} as TodoCategoryType,
 })
 
 export default SelectedTodoCateStore;

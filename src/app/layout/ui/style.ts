@@ -27,28 +27,38 @@ export const SidebarItemStyle = {
   container: (isActive: boolean) => ({
     width: "100%",
     height: "50px",
+    padding: "0 16px",
     lineHeight: "50px",
-    textAlign: "center",
     cursor: "pointer",
-    backgroundColor: isActive ? "rgb(203, 213, 225)" : "transparent",
+    backgroundColor: isActive ? "#252C38" : "transparent",
     transition: "background-color 0.3s ease",
     ":hover": {
-      backgroundColor: "rgb(148, 163, 184)",
+      backgroundColor: "#475671",
     },
   } as const),
   link: {
     textDecoration: "none",
-    color: "black",
+    color: "white",
   }
 };
 
 export const SidebarStyle = {
   constainer: {
-    width: "60px",
-    height: "calc(100vh - 50px)",
-    backgroundColor: "white",
+    width: "250px",
+    height: "100vh",
+    backgroundColor: "#384151",
+    color: "white",
     boxShadow: "0px 1px 4px rgba(0, 0, 0, 0.1)",
     paddingTop: "2px"
+  },
+  logo: {
+    width: "100%",
+    height: "80px",
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
+    fontSize: "2rem",
+    fontWeight: "bold",
   },
   nav: {
     width: "100%"
@@ -59,13 +69,13 @@ export const SidebarStyle = {
 export const MainStyle = {
   container: {
     width: "100%",
-    height: "calc(100vh - 50px)",
+    height: "100vh",
     display: "flex",
     flexDirection: "row",
   },
   content: {
-    width: "calc(100% - 60px)",
+    width: "calc(100% - 250px)",
     height: "100%",
-    backgroundColor: "rgb(243 244 246)",
+    backgroundColor: "#272B32",
   }
 } as const;

@@ -3,14 +3,18 @@
 export const CreateTodoCateBtnStyle = {
   width: "100%",
   height: "40px",
-  backgroundColor: "#f0f0f0",
+  backgroundColor: "#424B5B",
+  color: "#B4B4B4",
   display: "flex",
   justifyContent: "center",
   alignItems: "center",
   gap: "10px",
-  stroke: "#000",
+  stroke: "#B4B4B4",
   border: "none",
   cursor: "pointer",
-  color: "#000"
+  ":hover": {
+    color: "#fff",
+    stroke: "#fff",
+  }
 }
 

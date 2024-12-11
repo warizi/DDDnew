@@ -7,8 +7,13 @@ import useListTodoDnd from "../model/useListTodoDnD";
 import { createPortal } from "react-dom";
 import { TodoCate } from "@entities/todo";
 import { TodoCategoryType } from "@shared/db";
+import { useEffect, useRef, useState } from "react";
 
-function TodoCateSideBar() {
+function TodoCateSideBar({
+  isActive
+}: {
+  isActive: boolean
+}) {
   const {
     todoCates,
     todoCateIds,
@@ -17,14 +22,23 @@ function TodoCateSideBar() {
     handleDragEnd,
     activeTodoCate
   } = useListTodoDnd();
+  const [ height, setHeight ] = useState(0);
+  const ref = useRef<HTMLDivElement>(null);
 
+  const dropDownStyle = {
+    height: isActive ? height + "px" : "0px",
+  }
+  
+  useEffect(() => {
+    setHeight(ref.current?.clientHeight as number);
+  }, [todoCates])
   return (
     <DndContext onDragStart={handleDragStart} onDragEnd={handleDragEnd} sensors={sensors}>
-      <div css={TodoCateSideBarStyle.container}>
-        <div>
+      <div css={{...TodoCateSideBarStyle.container, ...dropDownStyle}}>
+        <div ref={ref} css={TodoCateSideBarStyle.innerContainer}>
           <ListTodoCate data={todoCates} todoCateIds={todoCateIds}/>
+          <CreateTodoCateBtn />
         </div>
-        <CreateTodoCateBtn />
       </div>
       {
         createPortal(
