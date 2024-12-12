@@ -1,14 +1,15 @@
 /** @jsxImportSource @emotion/react */
 
 import { TodoColumnType } from "@shared/db";
-import { TrashIcon } from "@shared/icon";
+import { EditIcon, TrashIcon } from "@shared/icon";
 import useDeleteTodoCol from "../model/useDeleteTodoCol";
 import useUpdateTodoCol from "../model/useUpdateTodoCol";
 import { useQueryClient } from "@tanstack/react-query";
 import { TodoQueryKey } from "../api/todoQueryKey";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
+import { ContextMenuItem, useContextMenu } from "@shared/components/contextMenu";
 
 const Style = {
   container: {
@@ -17,7 +18,7 @@ const Style = {
     justifyContent: 'start',
     alignItems: 'center',
     width: '350px',
-    minHeight: '100px',
+    minHeight: '300px',
     backgroundColor: '#545E6F',
     boxShadow: '0px 1px 4px rgba(0, 0, 0, 0.1)',
     borderRadius: '10px',
@@ -30,28 +31,11 @@ const Style = {
     width: "100%",
     height: "35px",
     lineHeight: "35px",
-    padding: "0 5px 0 16px",
+    padding: "0 16px 0 16px",
     backgroundColor: "#252C38",
     color: "white",
     borderRadius: '10px 10px 0 0',
     cursor: 'pointer',
-  },
-  deleteBtn: {
-    color: 'white',
-    cursor: 'pointer',
-    fontSize: '16px',
-    padding: '0 2px',
-    borderRadius: '5px',
-    backgroundColor: '#252C38',
-    stroke: '#DE4747',
-    border: 'none',
-    width: "30px",
-    opacity: 0,
-    transition: 'background-color 0.3s ease',
-    ':hover': {
-      backgroundColor: '#475671',
-      opacity: 1,
-    },
   },
   isDragging: {
     border: "1px dashed #d9d9d9",
@@ -65,7 +49,18 @@ const Style = {
     alignItems: 'center',
     width: '100%',
     height: '100%',
-  } as const
+  } as const,
+  input: {
+    fontSize: '16px',
+    height: '30px',
+    lineHeight: '30px',
+    width: '100%',
+    border: 'none',
+    borderBottom: '1px solid #d9d9d9',
+    outline: 'none',
+    backgroundColor: 'transparent',
+    color: 'white',
+  }
 }
 
 function TodoCol({
@@ -81,6 +76,8 @@ function TodoCol({
 
   const [ name, setName ] = useState(data.name);
   const [ isEditMode, setIsEditMode ] = useState(false);
+  const { handleContextMenu } = useContextMenu();
+  const inputRef = useRef<HTMLInputElement>(null);
 
   const handleDeleteTodoCol = () => {
     deleteTodoCol(data.id, {
@@ -122,6 +119,26 @@ function TodoCol({
     // zIndex: isDragging ? 1000 : 10
   }
 
+  const contextMenuItems = [
+    <ContextMenuItem
+      key={'todocol-' + 1}
+      icon={<EditIcon />}
+      text="Edit"
+      onClick={() => {
+        setIsEditMode(true)
+        setTimeout(() => {
+          inputRef.current?.focus();
+        }, 200);
+      }}
+    />,
+    <ContextMenuItem
+      key={'todocol-' + 2}
+      icon={<TrashIcon />}
+      text="Delete"
+      onClick={handleDeleteTodoCol}
+    />
+  ]
+
   if (isDragging) {
 
     return (
@@ -136,20 +153,27 @@ function TodoCol({
     <div css={Style.container}
       ref={setNodeRef}
       style={style}
+      onContextMenu={(e) => handleContextMenu(e, contextMenuItems)}
     >
       <div css={Style.title}
-        onClick={() => setIsEditMode(true)}
         {...attributes}
-        {...listeners}
+        {...(isEditMode ? {} : listeners)}
       >
         {
           isEditMode ? (
             <input 
-              css={{fontSize: '16px', width: '100%', outline: 'none'}}
+              ref={inputRef}
+              css={Style.input}
               type="text" 
               value={name}
               onChange={(e) => setName(e.target.value)}
               onBlur={handleUpdateTodoCol}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter') {
+                  handleUpdateTodoCol();
+                  setIsEditMode(false);
+                }
+              }}
             />
           ) : (
             <span>
@@ -157,11 +181,6 @@ function TodoCol({
             </span>
           )
         }
-        <button css={Style.deleteBtn}
-          onClick={handleDeleteTodoCol}
-        >
-          <TrashIcon />
-        </button>
       </div>
       <div css={Style.contents}>
         {children}

@@ -1,8 +1,8 @@
 /** @jsxImportSource @emotion/react */
 
 import { TodoCategoryType } from "@shared/db";
-import { ListBullet, TrashIcon } from "@shared/icon";
-import { useState } from "react";
+import { EditIcon, ListBullet, TrashIcon } from "@shared/icon";
+import { useRef, useState } from "react";
 import useUpdateTodoCate from "../model/useUpdateTodoCate";
 import { useQueryClient } from "@tanstack/react-query";
 import { TodoQueryKey } from "../api/todoQueryKey";
@@ -12,6 +12,7 @@ import { CSS } from "@dnd-kit/utilities";
 import { useRecoilState } from "recoil";
 import SelectedTodoCateStore from "@shared/store/todo/model/SelectedTodoCateStore";
 import { TodoCateStyle } from "./TodoCate.style";
+import { ContextMenuItem, useContextMenu } from "@shared/components/contextMenu";
 
 function TodoCate({
   data
@@ -24,6 +25,8 @@ function TodoCate({
   const { mutate: updateTodoCate } = useUpdateTodoCate();
   const { mutate: deleteTodoCate } = useDeleteTodoCate();
   const [ selectedTodoCate, setSelectedTodoCate ] = useRecoilState(SelectedTodoCateStore);
+  const { handleContextMenu } = useContextMenu();
+  const inputRef = useRef<HTMLInputElement | null>(null);
 
   const { setNodeRef, attributes, listeners, transform, transition, isDragging } = useSortable({
     id: data.id,
@@ -69,12 +72,32 @@ function TodoCate({
 
   const onEditModeStart = () => {
     setIsEditMode(true);
+    setTimeout(() => {
+      if(inputRef.current){
+        inputRef?.current?.focus();
+      }
+    }, 200)
   }
 
   const onEditModeEnd = () => {
     handleUpdateTodoCate();
     setIsEditMode(false);
   }
+
+  const contextMenuItems = [
+    <ContextMenuItem
+      key={"todocate-" + 1}
+      icon={<EditIcon size={18}/>}
+      text="Edit"
+      onClick={onEditModeStart}
+    />,
+    <ContextMenuItem
+    key={"todocate-" + 2}
+      icon={<TrashIcon size={18}/>}
+      text="Delete"
+      onClick={handleDeleteTodoCate}
+    />,
+  ]
 
   if (isDragging) {
 
@@ -97,22 +120,24 @@ function TodoCate({
       }}
       ref={setNodeRef}
       {...attributes}
-      {...listeners}
+      {...(isEditMode ? {} : listeners)}
       style={style}
+      onContextMenu={(e) => handleContextMenu(e, contextMenuItems)}
     >
-      <div
-        onClick={onEditModeStart}
-      >
-        <ListBullet />
-      </div>
       {
         isEditMode ? (
           <input 
+            ref={inputRef}
             css={TodoCateStyle.input}
             type="text" 
             value={name} 
             onChange={handleChange}
-            onBlur={onEditModeEnd}  
+            onBlur={onEditModeEnd}
+            onKeyDown={(e) => {
+              if(e.key === "Enter"){
+                onEditModeEnd();
+              }}
+            }
           />
         ) : (
           <span 
@@ -123,12 +148,6 @@ function TodoCate({
           </span>
         )
       }
-      <div 
-        css={TodoCateStyle.deleteBtn}
-        onClick={handleDeleteTodoCate}  
-      >
-        <TrashIcon />
-      </div>
     </div>
   );
 };

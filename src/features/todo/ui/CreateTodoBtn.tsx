@@ -2,7 +2,7 @@
 
 import { Id } from "@shared/db/model/types";
 import { PlusIcon } from "@shared/icon";
-import { MODAL_KEY, MODAL_TYPE, useModal } from "@shared/modal";
+import { MODAL_KEY, MODAL_TYPE, useModal } from "@shared/components/modal";
 
 const Style = {
   width: "100%",

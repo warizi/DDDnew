@@ -6,6 +6,7 @@ import CalendarIcon from "./ui/CalendarIcon";
 import RightIcon from "./ui/RightIcon";
 import LeftIcon from "./ui/LeftIcon";
 import ExclamationIcon from "./ui/ExclamationIcon";
+import EditIcon from "./ui/EditIcon";
 
 export {
   PlusIcon,
@@ -15,5 +16,6 @@ export {
   CalendarIcon,
   RightIcon,
   LeftIcon,
-  ExclamationIcon
+  ExclamationIcon,
+  EditIcon
 }

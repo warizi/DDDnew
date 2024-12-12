@@ -1,7 +1,7 @@
 /** @jsxImportSource @emotion/react */
 
 import { CreateTodoForm } from "@features/todo";
-import { MODAL_KEY, ModalStore, SideModal } from "@shared/modal";
+import { MODAL_KEY, ModalStore, SideModal } from "@shared/components/modal";
 import { useRecoilValue } from "recoil";
 
 function CreateTodoModal() {
