@@ -4,6 +4,7 @@ import { SortableContext } from "@dnd-kit/sortable";
 import { TodoCol } from "@entities/todo";
 import { TodoColumnType } from "@shared/db";
 import { Id } from "@shared/db/model/types";
+import CreateTodoBtn from "./CreateTodoBtn";
 
 const Style = {
   display: "flex",
@@ -27,7 +28,10 @@ function ListTodoColByCateId({
       <SortableContext items={todoColIds}>
         {
           todoCols?.map((col) => (
-            <TodoCol key={col.id} data={col} />
+            <TodoCol key={col.id} data={col}>
+              <div>todo</div>
+              <CreateTodoBtn todoColumnId={col.id}/>
+            </TodoCol>
           ))
         }
       </SortableContext>

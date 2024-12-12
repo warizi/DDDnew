@@ -1,0 +1,8 @@
+export enum MODAL_KEY {
+  CREATE_TODO = 'CREATE_TODO',
+}
+
+export enum MODAL_TYPE {
+  SLIDE_RIGHT = 'SLIDE_RIGHT',
+  SLIDE_LEFT = 'SLIDE_LEFT',
+}

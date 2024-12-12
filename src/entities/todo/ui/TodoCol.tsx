@@ -57,13 +57,23 @@ const Style = {
     border: "1px dashed #d9d9d9",
     borderRadius: "10px",
     opacity: 0.5,
-  }
+  },
+  contents: {
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    width: '100%',
+    height: '100%',
+  } as const
 }
 
 function TodoCol({
-  data
+  data,
+  children
 }: {
   data: TodoColumnType
+  children?: React.ReactNode
 }) {
   const queryClient = useQueryClient();
   const { mutate: updateTodoCol } = useUpdateTodoCol();
@@ -152,6 +162,9 @@ function TodoCol({
         >
           <TrashIcon />
         </button>
+      </div>
+      <div css={Style.contents}>
+        {children}
       </div>
     </div>
   );
