@@ -6,10 +6,11 @@ import SelectedTodoCateStore from "@shared/store/todo/model/SelectedTodoCateStor
 import CreateTodoColBtn from "./CreateTodoColBtn";
 
 function TodoHeader() {
-  const selectedTodoCate = useRecoilValue(SelectedTodoCateStore);
+  // const selectedTodoCate = useRecoilValue(SelectedTodoCateStore);
   return (
     <div css={TodoHeaderStyle.header}>
-      <h2 css={TodoHeaderStyle.title}>{selectedTodoCate.name}</h2>
+      <div></div>
+      {/* <h2 css={TodoHeaderStyle.title}>{selectedTodoCate.name}</h2> */}
       <CreateTodoColBtn />
     </div>
   );

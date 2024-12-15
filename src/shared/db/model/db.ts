@@ -10,6 +10,6 @@ export const db = new Dexie("dddDatabase") as Dexie & {
 db.version(1).stores({
   todoCategory: "++id, name, order",
   todoColumn: "++id, name, todoCategoryId, order",
-  todo: "++id, title, description, todoColumnId, priority, order, startDate, endDate"
+  todo: "++id, title, description, todoCateId, todoColumnId, priority, order, startDate, endDate"
 })
 

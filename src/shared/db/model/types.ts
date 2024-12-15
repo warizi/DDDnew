@@ -33,6 +33,7 @@ export type TodoType = {
   id: Id;
   title: string;
   description?: string;
+  todoCateId: Id;
   todoColumnId: Id;
   priority?: TodoPriority;
   order: number;
@@ -43,6 +44,7 @@ export type TodoType = {
 export type TodoInputType = {
   title: string;
   description?: string;
+  todoCateId: Id;
   todoColumnId: Id;
   priority?: TodoPriority;
   order: number;

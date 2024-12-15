@@ -54,7 +54,6 @@ const InputWithCalendar = ({
   
 
   useEffect(() => {
-    console.log(date);
     setDateValue(date);
     if (date.length === 0) {
       setText("");

@@ -6,7 +6,7 @@ export const TodoHeaderStyle = {
     alignItems: "center",
     height: "50px",
     padding: "0 0 0 10px",
-    backgroundColor: "#545E6F",
+    // backgroundColor: "#545E6F",
     // boxShadow: "0px 1px 4px rgba(0, 0, 0, 0.1)",
   },
   title: {

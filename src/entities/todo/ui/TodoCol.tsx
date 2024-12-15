@@ -10,19 +10,25 @@ import { useRef, useState } from "react";
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 import { ContextMenuItem, useContextMenu } from "@shared/components/contextMenu";
+import { formatSortableId } from "@features/todo/model/formatSortableId";
 
 const Style = {
+  outerContainer: {
+    width: 'fit-content',
+    height: 'calc(90vh - 60px)',
+  },
   container: {
-    display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'start',
-    alignItems: 'center',
+    display: 'grid',
+    gridTemplateRows: 'auto 1fr auto',
+    // flexDirection: 'column',
+    // justifyContent: 'start',
+    // alignItems: 'center',
+    overflow: 'hidden',
     width: '350px',
     minHeight: '300px',
     backgroundColor: '#545E6F',
     boxShadow: '0px 1px 4px rgba(0, 0, 0, 0.1)',
     borderRadius: '10px',
-    padding: '2px',
   } as const,
   title: {
     display: 'flex',
@@ -42,6 +48,9 @@ const Style = {
     borderRadius: "10px",
     opacity: 0.5,
   },
+  hidden: {
+    opacity: 0,
+  },
   contents: {
     display: 'flex',
     flexDirection: 'column',
@@ -49,6 +58,8 @@ const Style = {
     alignItems: 'center',
     width: '100%',
     height: '100%',
+    padding: '5px',
+    overflowY: 'auto',
   } as const,
   input: {
     fontSize: '16px',
@@ -65,9 +76,11 @@ const Style = {
 
 function TodoCol({
   data,
+  addTodoBtn,
   children
 }: {
   data: TodoColumnType
+  addTodoBtn?: React.ReactNode
   children?: React.ReactNode
 }) {
   const queryClient = useQueryClient();
@@ -106,7 +119,7 @@ function TodoCol({
   }
 
   const { setNodeRef, attributes, listeners, transform, transition, isDragging } = useSortable({
-    id: data.id,
+    id: formatSortableId(data.id, "todoCol"),
     data: {
       type: "todoCol",
       todoCol: data
@@ -142,48 +155,87 @@ function TodoCol({
   if (isDragging) {
 
     return (
+      <div css={Style.outerContainer}
+      ref={setNodeRef}
+      style={style}
+    >
       <div css={{...Style.container, ...Style.isDragging}}
-        ref={setNodeRef}
-        style={style}
       >
+        <div css={{...Style.title, ...Style.hidden}}
+          {...attributes}
+          {...(isEditMode ? {} : listeners)}
+          onContextMenu={(e) => handleContextMenu(e, contextMenuItems)}
+        >
+          {
+            isEditMode ? (
+              <input 
+                ref={inputRef}
+                css={Style.input}
+                type="text" 
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                onBlur={handleUpdateTodoCol}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter') {
+                    handleUpdateTodoCol();
+                    setIsEditMode(false);
+                  }
+                }}
+              />
+            ) : (
+              <span>
+                {name} 
+              </span>
+            )
+          }
+        </div>
+        <div css={{...Style.contents, ...Style.hidden}}>
+          {children}
+        </div>
+        {addTodoBtn}
       </div>
+    </div>
     )
   }
   return (
-    <div css={Style.container}
+    <div css={Style.outerContainer}
       ref={setNodeRef}
       style={style}
-      onContextMenu={(e) => handleContextMenu(e, contextMenuItems)}
     >
-      <div css={Style.title}
-        {...attributes}
-        {...(isEditMode ? {} : listeners)}
+      <div css={Style.container}
       >
-        {
-          isEditMode ? (
-            <input 
-              ref={inputRef}
-              css={Style.input}
-              type="text" 
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-              onBlur={handleUpdateTodoCol}
-              onKeyDown={(e) => {
-                if (e.key === 'Enter') {
-                  handleUpdateTodoCol();
-                  setIsEditMode(false);
-                }
-              }}
-            />
-          ) : (
-            <span>
-              {name} 
-            </span>
-          )
-        }
-      </div>
-      <div css={Style.contents}>
-        {children}
+        <div css={Style.title}
+          {...attributes}
+          {...(isEditMode ? {} : listeners)}
+          onContextMenu={(e) => handleContextMenu(e, contextMenuItems)}
+        >
+          {
+            isEditMode ? (
+              <input 
+                ref={inputRef}
+                css={Style.input}
+                type="text" 
+                value={name}
+                onChange={(e) => setName(e.target.value)}
+                onBlur={handleUpdateTodoCol}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter') {
+                    handleUpdateTodoCol();
+                    setIsEditMode(false);
+                  }
+                }}
+              />
+            ) : (
+              <span>
+                {name} 
+              </span>
+            )
+          }
+        </div>
+        <div css={Style.contents}>
+          {children}
+        </div>
+        {addTodoBtn}
       </div>
     </div>
   );

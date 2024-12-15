@@ -1,13 +1,14 @@
 /** @jsxImportSource @emotion/react */
 
-import { ListTodoColByCateId } from "@features/todo";
+import { CreateTodoBtn, ListTodoColByCateId } from "@features/todo";
 import useListTodoColDnD from "../model/useListTodoColDnD";
 import { useRecoilValue } from "recoil";
 import SelectedTodoCateStore from "@shared/store/todo/model/SelectedTodoCateStore";
 import { DndContext, DragOverlay } from "@dnd-kit/core";
 import { createPortal } from "react-dom";
-import { TodoCol } from "@entities/todo";
+import { Todo, TodoCol } from "@entities/todo";
 import { TodoColumnType } from "@shared/db";
+import ListTodoByColId from "@features/todo/ui/ListTodoByColId";
 
 const Style = {
   display: "flex",
@@ -23,22 +24,25 @@ function TodoContents() {
   const selectedTodoCate = useRecoilValue(SelectedTodoCateStore);
   const {
     todoCols,
-    todoColIds,
+    todos,
     handleDragEnd,
     handleDragStart,
+    handleDragOver,
     sensors,
-    activeTodoCol
+    activeTodoCol,
+    activeTodo
   } = useListTodoColDnD(selectedTodoCate.id);
   return (
     <DndContext
       onDragStart={handleDragStart}
       onDragEnd={handleDragEnd}
+      onDragOver={handleDragOver}
       sensors={sensors}
     >
       <div css={Style}>
         <ListTodoColByCateId 
           todoCols={todoCols}
-          todoColIds={todoColIds}
+          todos={todos}
         />
       </div>
       {
@@ -46,7 +50,18 @@ function TodoContents() {
           <DragOverlay>
             {
               activeTodoCol &&
-              <TodoCol data={todoCols.find((col) => col.id === activeTodoCol.id) as TodoColumnType} />
+              <TodoCol 
+                data={todoCols.find((col) => col.id === activeTodoCol.id) as TodoColumnType} 
+                addTodoBtn={<CreateTodoBtn todoColumnId={activeTodoCol.id}/>}
+              >
+                <ListTodoByColId
+                  todos={todos.filter((todo) => todo.todoColumnId === activeTodoCol.id)} 
+                />
+              </TodoCol>
+            }
+            {
+              activeTodo && 
+              <Todo data={activeTodo} />
             }
           </DragOverlay>,
           document.body

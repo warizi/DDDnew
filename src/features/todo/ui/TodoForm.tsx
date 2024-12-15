@@ -1,12 +1,16 @@
 /** @jsxImportSource @emotion/react */
 
+import { useUpdateTodo } from "@entities/todo";
+import { TodoQueryKey } from "@entities/todo/api/todoQueryKey";
 import { CalendarPickerType } from "@shared/components/calendar/model/useCalendarDate";
 import { InputWithPriority, Textarea } from "@shared/components/form";
 import InputWithCalendar from "@shared/components/form/ui/InputWithCalendar";
-import { TodoInputType } from "@shared/db";
-import { Id } from "@shared/db/model/types";
-import { FormatDate } from "@shared/utils";
-import { useState } from "react";
+import { Id, TodoType } from "@shared/db/model/types";
+import SelectedTodoCateStore from "@shared/store/todo/model/SelectedTodoCateStore";
+import { debounce, FormatDate } from "@shared/utils";
+import { useQueryClient } from "@tanstack/react-query";
+import { useCallback, useState } from "react";
+import { useRecoilValue } from "recoil";
 
 const Style = {
   container: {
@@ -36,27 +40,61 @@ const Style = {
   } as const
 }
 
-function CreateTodoForm({
+function TodoForm({
   todoColumnId,
+  data,
 }: {
   todoColumnId: Id;
+  data: TodoType;
 }) {
-  const [ values, setValues ] = useState<TodoInputType>({
-    title: "",
-    description: "",
+  const {
+    id,
+    title = "",
+    description = "",
+    order,
+    priority,
+    startDate,
+    endDate,
+  } = data;
+  const selectedTodoCate = useRecoilValue(SelectedTodoCateStore);
+  const [ values, setValues ] = useState<TodoType>({
+    id: id,
+    title: title,
+    description: description,
+    todoCateId: selectedTodoCate.id,
     todoColumnId: todoColumnId,
-    priority: undefined,
-    order: 0,
-    startDate: undefined,
-    endDate: undefined,
-  })
+    priority: priority,
+    order: order,
+    startDate: startDate,
+    endDate: endDate,
+  });
+  const queryClient = useQueryClient();
+  const { mutate } = useUpdateTodo();
+
+  const handleUpdate = (newValues: TodoType) => {
+    mutate(newValues, {
+      onSuccess: () => {
+        queryClient.invalidateQueries({
+          queryKey: [TodoQueryKey.todos, selectedTodoCate.id]
+        });
+      }
+    });
+  }
+
+  const debouncedUpdate = useCallback(
+    debounce((newValues: TodoType) => handleUpdate(newValues), 500), []
+  )
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
-    setValues({
+    const newValues = {
       ...values,
       [name]: value
-    })
+    }
+    setValues(newValues);
+
+    // 디바운스 처리
+    debouncedUpdate(newValues);
   }
   const handleDateChange = (date: CalendarPickerType[]) => {
     if (date.length === 0) {
@@ -67,11 +105,15 @@ function CreateTodoForm({
       });
       return;
     };
-    setValues({
+    const newValues = {
       ...values,
       startDate: date && FormatDate(date[0].date, "YYYY-MM-DD"),
       endDate: date && FormatDate(date[1]?.date, "YYYY-MM-DD"),
-    });
+    }
+    setValues(newValues);
+
+    // 디바운스 처리
+    debouncedUpdate(newValues);
   }
   return (
     <form css={Style.container}>
@@ -102,4 +144,4 @@ function CreateTodoForm({
   );
 };
 
-export default CreateTodoForm;
+export default TodoForm;

@@ -11,7 +11,7 @@ export const TodoCateStyle = {
     padding: "0 10px 0 30px",
     margin: "0",
     stroke: "#EFEFEF",
-    fontSize: "16px",
+    fontSize: "12px",
     backgroundColor: "#2F3645",
     transition: "background-color 0.3s ease",
     ":hover": {
@@ -27,7 +27,7 @@ export const TodoCateStyle = {
     transform: "scale(0.9)",
   },
   input: {
-    fontSize: '14px',
+    fontSize: '12px',
     height: '30px',
     lineHeight: '30px',
     width: '100%',
@@ -38,7 +38,7 @@ export const TodoCateStyle = {
     color: 'white',
   } as const,
   span: {
-    fontSize: "16px",
+    fontSize: "12px",
     width: "100%",
     color: "#EFEFEF",
   } as const,

@@ -1,5 +1,5 @@
 export enum MODAL_KEY {
-  CREATE_TODO = 'CREATE_TODO',
+  EDIT_TODO = 'EDIT_TODO',
 }
 
 export enum MODAL_TYPE {

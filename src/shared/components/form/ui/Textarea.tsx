@@ -4,7 +4,7 @@ import { useRef, useEffect } from "react";
 
 const Style: CSSObject = {
   width: "100%",
-  minHeight: "50px",
+  minHeight: "20px",
   resize: "none", // 사용자가 직접 크기를 조정하지 못하도록 설정
   overflow: "hidden", // 스크롤 숨기기
 };
@@ -15,6 +15,7 @@ function Textarea({
   onChange,
   placeholder,
   css: customCss = {},
+  readOnly = false,
   ...rest
 }: {
   value?: string;
@@ -22,6 +23,7 @@ function Textarea({
   onChange?: (e: React.ChangeEvent<HTMLTextAreaElement>) => void;
   placeholder?: string;
   css?: CSSObject;
+  readOnly?: boolean;
   rest?: any;
 }) {
   const textareaRef = useRef<HTMLTextAreaElement>(null);
@@ -50,6 +52,7 @@ function Textarea({
         onChange && onChange(e); // 부모에서 전달받은 onChange 실행
         adjustHeight(); // 높이 조정
       }}
+      readOnly={readOnly}
       {...rest}
     />
   );

@@ -1,9 +1,9 @@
 import TodoCateSideBar from "./ui/TodoCateSideBar";
 import TodoContents from "./ui/TodoContents";
-import CreateTodoModal from "./ui/CreateTodoModal";
+import EditTodoModal from "./ui/EditTodoModal";
 
 export {
   TodoCateSideBar,
   TodoContents,
-  CreateTodoModal,
+  EditTodoModal as CreateTodoModal,
 }
