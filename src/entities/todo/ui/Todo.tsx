@@ -25,27 +25,32 @@ const Style = {
     padding: "10px",
     fontSize: "14px",
     cursor: "pointer",
+    zIndex: 1,
+    height: "fit-content",
   } as const,
   title: {
     fontWeight: "bold",
+    zIndex: 1,
   } as const,
   footer: {
     display: "flex",
     justifyContent: "space-between",
     alignItems: "center",
+    zIndex: 1,
   } as const,
   date: {
     fontSize: "12px",
     color: "#999",
+    zIndex: 1,
   },
   hidden: {
     opacity: 0,
+    zIndex: 1,
   },
   discription: {
     display: "block",
     overflow: "hidden",
     width: "100%",
-    // whiteSpace: "nowrap",
     maxHeight: "5em",
     fontSize: "12px",
     backgroundColor: "#f9f9f9",
@@ -54,7 +59,8 @@ const Style = {
     border: "none",
     outline: "none",
     padding: "5px",
-    cursor: "pointer"
+    cursor: "pointer",
+    zIndex: 1,
   } as const,
   isDraggin: {
     backgroundColor: "#f9f9f9",
@@ -96,7 +102,7 @@ function Todo({
   const style = {
     transform: CSS.Transform.toString(transform),
     transition: transition ?? undefined,
-    zIndex: isDragging ? 1000 : 1
+    zIndex: isDragging ? 1000 : 10
   }
 
   const contextItem = [

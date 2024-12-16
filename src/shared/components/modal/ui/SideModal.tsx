@@ -33,6 +33,7 @@ const Style = {
     minWidth: '300px',
     height: '100vh',
     backgroundColor: '#fff',
+    zIndex: 9999,
   } as const,
   header: {
     display: 'flex',

@@ -15,6 +15,7 @@ const Style = {
   color: "white",
   overflow: "hidden",
   boxShadow: "0px 4px 4px rgba(0, 0, 0, 0.2)",
+  zIndex: 9999,
 } as const;
 
 function ContextMenuContainer({

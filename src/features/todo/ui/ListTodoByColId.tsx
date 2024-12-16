@@ -3,7 +3,6 @@
 import { SortableContext } from "@dnd-kit/sortable";
 import { Todo } from "@entities/todo";
 import { TodoType } from "@shared/db";
-import { Id } from "@shared/db/model/types";
 import { formatSortableId } from "../model/formatSortableId";
 
 const Style = { 
@@ -13,6 +12,8 @@ const Style = {
     flexDirection: 'column',
     alignItems: 'center',
     gap: '10px',
+    marginBottom: '10px',
+    duration: '0.3s',
   } as const,
 }
 

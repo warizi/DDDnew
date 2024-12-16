@@ -2,7 +2,6 @@
 
 import { Id, TodoInputType } from "@shared/db/model/types";
 import { PlusIcon } from "@shared/icon";
-import { MODAL_KEY, MODAL_TYPE, useModal } from "@shared/components/modal";
 import { useCreateTodo } from "@entities/todo";
 import { useQueryClient } from "@tanstack/react-query";
 import { TodoQueryKey } from "@entities/todo/api/todoQueryKey";
