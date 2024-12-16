@@ -5,5 +5,5 @@ import EditTodoModal from "./ui/EditTodoModal";
 export {
   TodoCateSideBar,
   TodoContents,
-  EditTodoModal as CreateTodoModal,
+  EditTodoModal,
 }

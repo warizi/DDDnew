@@ -7,6 +7,7 @@ import { keyframes } from "@emotion/react";
 import { MODAL_KEY, MODAL_TYPE } from "../model/MODAL_ENUM";
 import { createPortal } from "react-dom";
 import { CloseIcon } from "@shared/icon";
+import Backdrop from "./Backdrop";
 
 const slideInRight = keyframes`
   from {
@@ -84,17 +85,20 @@ function SideModal({
   }
   return createPortal(
       (modalState.isOpen && modalState.modalKey === modalKey) &&
-      <div css={{...Style.container, ...returnAnimation(), ...returnLocation()}}>
-        <div css={Style.header}>
-          <button css={Style.closeBtn}
-            onClick={closeModal}
-            disabled={isClosing}
-          >
-            <CloseIcon />
-          </button>
+      <>
+        <div css={{...Style.container, ...returnAnimation(), ...returnLocation()}}>
+          <div css={Style.header}>
+            <button css={Style.closeBtn}
+              onClick={closeModal}
+              disabled={isClosing}
+            >
+              <CloseIcon />
+            </button>
+          </div>
+          {children}
         </div>
-        {children}
-      </div>
+        <Backdrop onClick={closeModal}/>
+      </>
       ,
       document.body
     );

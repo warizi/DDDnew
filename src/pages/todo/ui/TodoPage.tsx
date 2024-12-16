@@ -1,7 +1,7 @@
 /** @jsxImportSource @emotion/react */
 
 import { TodoHeader } from "@features/todo";
-import { CreateTodoModal, TodoContents } from "@widgets/todo";
+import { EditTodoModal, TodoContents } from "@widgets/todo";
 
 export const TodoPage = () => {
   return (
@@ -10,7 +10,7 @@ export const TodoPage = () => {
         <TodoHeader />
         <TodoContents />
       </div>
-      <CreateTodoModal />
+      <EditTodoModal />
     </>
   );
 };
