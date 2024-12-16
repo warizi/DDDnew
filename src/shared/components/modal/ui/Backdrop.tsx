@@ -28,7 +28,7 @@ const Style = {
   left: "0",
   width: "100%",
   height: "100vh",
-  backgroundColor: "rgba(0, 0, 0, 0.5)",
+  backgroundColor: "rgba(0, 0, 0, 0.3)",
   zIndex: 9000,
 } as const;
 

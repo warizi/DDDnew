@@ -55,10 +55,9 @@ const useListTodoColDnD = (todoCateId: Id) => {
       setTodoListData((prev) => {
         const activeIndex = prev.findIndex((todo) => formatSortableId(todo.id, "todo") === active.id);
         const overIndex = prev.findIndex((todo) => formatSortableId(todo.id, "todo") === over.id);
-
-        todos[activeIndex].todoColumnId = todos[overIndex].todoColumnId;
+        prev[activeIndex].todoColumnId = prev[overIndex].todoColumnId;
         const newArray = arrayMove(prev, activeIndex, overIndex);
-        const columnTodos = newArray.filter((todo) => todo.todoColumnId === todos[overIndex].todoColumnId);
+        const columnTodos = newArray.filter((todo) => todo.todoColumnId === prev[overIndex].todoColumnId);
         const newUpdateTodo = calcOrder(columnTodos, active.id, "todo");
 
         mutateTodo(newUpdateTodo, {
@@ -80,7 +79,7 @@ const useListTodoColDnD = (todoCateId: Id) => {
       setTodoListData((prev) => {
         const activeIndex = prev.findIndex((todo) => formatSortableId(todo.id, "todo") === active.id);
         const overId = String(over.id).slice(0, -2);
-        todos[activeIndex].todoColumnId = Number(overId);
+        prev[activeIndex].todoColumnId = Number(overId);
         const newArray = arrayMove(prev, activeIndex, activeIndex);
         const columnTodos = newArray.filter((todo) => todo.todoColumnId === Number(overId));
         const newUpdateTodo = calcOrder(columnTodos, active.id, "todo");

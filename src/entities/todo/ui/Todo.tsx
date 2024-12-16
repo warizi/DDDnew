@@ -13,6 +13,7 @@ import { Textarea } from "@shared/components/form";
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 import { formatSortableId } from "@features/todo/model/formatSortableId";
+import PriorityTag from "@shared/components/form/ui/PriorityTag";
 
 const Style = {
   container: {
@@ -63,9 +64,9 @@ const Style = {
     zIndex: 1,
   } as const,
   isDraggin: {
-    backgroundColor: "#f9f9f9",
-    border: "1px dashed #d9d9d9",
-    opacity: 0.5,
+    backgroundColor: "#d9d9d9",
+    border: "1px dashed #21242A",
+    opacity: 0.3,
   }
 }
 
@@ -102,7 +103,7 @@ function Todo({
   const style = {
     transform: CSS.Transform.toString(transform),
     transition: transition ?? undefined,
-    zIndex: isDragging ? 1000 : 10
+    // zIndex: isDragging ? 1000 : 10
   }
 
   const contextItem = [
@@ -190,7 +191,7 @@ function Todo({
       </div>
       <div css={Style.footer}>
         <span>
-          {priority}
+          {priority && <PriorityTag value={priority}/>}
         </span>
         <span css={Style.date}>
           {

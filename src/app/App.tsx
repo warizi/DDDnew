@@ -2,9 +2,10 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import './App.css'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import { MainLayout } from './layout'
-import { TodoPage } from '@pages/todo'
+import { NotePage, TodoPage } from '@pages/todo'
 import { RecoilRoot } from 'recoil'
 import { ContextMenuProvider } from '@shared/components/contextMenu'
+import { PATH_URL } from '@shared/consts'
 
 const queryClient = new QueryClient()
 function App() {
@@ -16,8 +17,9 @@ function App() {
           <BrowserRouter>
             <Routes>
               <Route element={<MainLayout />}>
-                <Route path="/" element={<div>Home</div>} />
-                <Route path="/todo" element={<TodoPage />} />
+                <Route path={PATH_URL.HOME} element={<div>Home</div>} />
+                <Route path={PATH_URL.TODO} element={<TodoPage />} />
+                <Route path={PATH_URL.NOTE} element={<NotePage />} />
               </Route>
             </Routes>
           </BrowserRouter>

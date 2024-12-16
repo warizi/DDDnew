@@ -45,11 +45,11 @@ const PriorityTag = ({
 }) => {
   const getPriorityStyle = (value: string) => {
     switch (value) {
-      case "high":
+      case "HIGH":
         return styles.highPriority;
-      case "medium":
+      case "MEDIUM":
         return styles.mediumPriority;
-      case "low":
+      case "LOW":
         return styles.lowPriority;
       default:
         return styles.defaultPriority;

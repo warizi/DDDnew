@@ -37,6 +37,7 @@ const Style = {
     borderRadius: "5px",
     backgroundColor: "#EFEFEF",
     resize: "none",
+    lineHeight: "1.5",
   } as const
 }
 
@@ -87,6 +88,7 @@ function TodoForm({
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
+    
     const newValues = {
       ...values,
       [name]: value
