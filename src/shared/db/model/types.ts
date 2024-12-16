@@ -1,6 +1,8 @@
 
 export type Id = number | string;
 
+
+//todo
 export type TodoCategoryType = {
   id: Id;
   name: string;
@@ -50,4 +52,17 @@ export type TodoInputType = {
   order: number;
   startDate?: string;
   endDate?: string;
+}
+
+// note 
+export type NoteFolderType = {
+  id: Id;
+  name: string;
+  noteCate: string;
+  order: number;
+}
+export type NoteFolderInputType = {
+  name: string;
+  noteCate: string;
+  order: number;
 }

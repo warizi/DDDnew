@@ -1,5 +1,7 @@
 /** @jsxImportSource @emotion/react */
+import { NoteCategoryEnum, NoteStore } from "@entities/note";
 import { useEffect, useRef, useState } from "react";
+import { useRecoilState } from "recoil";
 
 const Style = {
   container: {
@@ -40,8 +42,19 @@ const Style = {
 };
 
 function NoteCategory({ isActive }: { isActive: boolean }) {
+  const [ noteStore, setNoteStore ] = useRecoilState(NoteStore);
   const [height, setHeight] = useState<number | undefined>(0);
   const ref = useRef<HTMLUListElement>(null);
+
+  const returnActiveStyle = (cate: NoteCategoryEnum) => {
+    return noteStore.activeNoteCategory === cate ? { backgroundColor: "#5C6B8A" } : {};
+  }
+  const handleSelectCate = (cate: NoteCategoryEnum) => {
+    setNoteStore({
+      ...noteStore,
+      activeNoteCategory: cate,
+    });
+  }
 
   useEffect(() => {
     if (isActive) {
@@ -59,10 +72,30 @@ function NoteCategory({ isActive }: { isActive: boolean }) {
       }}
     >
       <ul css={Style.innerContainer} ref={ref}>
-        <li css={Style.itemContainer}>Project</li>
-        <li css={Style.itemContainer}>Area</li>
-        <li css={Style.itemContainer}>Resources</li>
-        <li css={Style.itemContainer}>Archive</li>
+        <li 
+          css={{...Style.itemContainer, ...returnActiveStyle(NoteCategoryEnum.PROJECT)}}
+          onClick={() => handleSelectCate(NoteCategoryEnum.PROJECT)}
+        >
+          {NoteCategoryEnum.PROJECT}
+        </li>
+        <li 
+          css={{...Style.itemContainer, ...returnActiveStyle(NoteCategoryEnum.AREA)}}
+          onClick={() => handleSelectCate(NoteCategoryEnum.AREA)}
+        >
+          {NoteCategoryEnum.AREA}
+        </li>
+        <li 
+          css={{...Style.itemContainer, ...returnActiveStyle(NoteCategoryEnum.RESOURCE)}}
+          onClick={() => handleSelectCate(NoteCategoryEnum.RESOURCE)}
+        >
+          {NoteCategoryEnum.RESOURCE}
+        </li>
+        <li 
+          css={{...Style.itemContainer, ...returnActiveStyle(NoteCategoryEnum.ARCHIVE)}}
+          onClick={() => handleSelectCate(NoteCategoryEnum.ARCHIVE)}
+        >
+          {NoteCategoryEnum.ARCHIVE}
+        </li>
       </ul>
     </div>
   );

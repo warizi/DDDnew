@@ -1,7 +1,7 @@
 /** @jsxImportSource @emotion/react */
 
 import { TodoCategoryType } from "@shared/db";
-import { EditIcon, ListBullet, TrashIcon } from "@shared/icon";
+import { EditIcon, TrashIcon } from "@shared/icon";
 import { useRef, useState } from "react";
 import useUpdateTodoCate from "../model/useUpdateTodoCate";
 import { useQueryClient } from "@tanstack/react-query";

@@ -195,7 +195,7 @@ function Todo({
         </span>
         <span css={Style.date}>
           {
-            !(startDate && endDate) ? "No due date" : ""
+            !(startDate || endDate) ? "No due date" : ""
           }
           {startDate} {endDate ? ` ~ ${endDate}` : ""}
         </span>

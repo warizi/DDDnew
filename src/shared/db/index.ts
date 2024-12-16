@@ -7,6 +7,8 @@ import {
   TodoCategoryInputType,
   TodoColumnInputType,
   TodoInputType,
+  NoteFolderType,
+  NoteFolderInputType
 } from "./model/types";
 
 export {
@@ -17,4 +19,6 @@ export {
   type TodoCategoryInputType,
   type TodoColumnInputType,
   type TodoInputType,
+  type NoteFolderType,
+  type NoteFolderInputType
 }
