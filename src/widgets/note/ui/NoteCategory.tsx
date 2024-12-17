@@ -53,6 +53,7 @@ function NoteCategory({ isActive }: { isActive: boolean }) {
     setNoteStore({
       ...noteStore,
       activeNoteCategory: cate,
+      activeNoteFolderId: "",
     });
   }
 

@@ -67,7 +67,7 @@ const useListTodoDnd = () => {
     })
   )
 
-  useEffect(() => {
+  useEffect(() => { 
     if (data) {
       setTodoCates(data);
     }

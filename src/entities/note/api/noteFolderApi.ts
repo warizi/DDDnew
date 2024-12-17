@@ -2,6 +2,12 @@ import { db, NoteFolderInputType } from "@shared/db";
 import { Id, NoteFolderType } from "@shared/db/model/types";
 
 const createNoteFolder = async (noteFolder: NoteFolderInputType) => {
+  const resAll = await getNoteFolders();
+  const sortByOrder = resAll.sort((a, b) => a.order - b.order);
+  const lastNoteFolder = sortByOrder[resAll.length - 1];
+
+  noteFolder.order = lastNoteFolder ? lastNoteFolder.order + 1000 : 1000;
+  
   const res = db.noteFolder.add(noteFolder);
 
   return res;

@@ -30,13 +30,19 @@ function ContextMenuItem({
   text,
   onClick,
 }: {
-  icon: React.ReactNode,
+  icon?: React.ReactNode,
   text: string
-  onClick: () => void
+  onClick?: () => void
 }) {
+  const handleClick = () => {
+    onClick && onClick();
+  }
   return (
     <div css={Style}
-      onClick={onClick}
+      onClick={(event) => {
+        if (!onClick) event.stopPropagation();
+        handleClick();
+      }}
     >
       {icon}
       <span>
