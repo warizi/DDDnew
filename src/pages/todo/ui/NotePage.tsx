@@ -1,6 +1,6 @@
 /** @jsxImportSource @emotion/react */
 
-import { NoteSidebar } from "@widgets/note";
+import { EditNoteModal, NoteContents, NoteSidebar } from "@widgets/note";
 
 const Style = {
   container: {
@@ -15,9 +15,13 @@ const Style = {
 
 function NotePage() {
   return (
-    <div css={{...Style.container}}>
-      <NoteSidebar />
-    </div>
+    <>
+      <div css={{...Style.container}}>
+        <NoteSidebar />
+        <NoteContents />
+      </div>
+      <EditNoteModal />
+    </>
   );
 };
 

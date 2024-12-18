@@ -1,7 +1,6 @@
 
 export type Id = number | string;
 
-
 //todo
 export type TodoCategoryType = {
   id: Id;
@@ -65,4 +64,26 @@ export type NoteFolderInputType = {
   name: string;
   noteCate: string;
   order: number;
+}
+
+export type NoteType = {
+  id: Id;
+  title: string;
+  content: string;
+  noteCate: string;
+  noteFolderId: Id;
+  order: number;
+}
+
+export type NoteInputType = {
+  title: string;
+  content: string;
+  noteCate: string;
+  noteFolderId: Id;
+  order: number;
+}
+
+export enum NoteDisplayEnum {
+  LIST = "LIST",
+  GRID = "GRID"
 }
