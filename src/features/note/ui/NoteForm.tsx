@@ -1,14 +1,13 @@
 /** @jsxImportSource @emotion/react */
 
-import { useUpdateNote } from "@entities/note";
+import { NoteStore, useUpdateNote } from "@entities/note";
 import { NoteQueryKey } from "@entities/note/model/NoteQueryKey";
-import { CommonEditor, TipTap } from "@shared/components/editor";
-import { Textarea } from "@shared/components/form";
+import { CommonEditor } from "@shared/components/editor";
 import { NoteType } from "@shared/db/model/types";
 import { debounce } from "@shared/utils";
 import { useQueryClient } from "@tanstack/react-query";
-import { useCurrentEditor } from "@tiptap/react";
 import { useCallback, useState } from "react";
+import { useRecoilValue } from "recoil";
 
 const Style = {
   container: {
@@ -16,7 +15,7 @@ const Style = {
     flexDirection: 'column',
     height: '100%',
     padding: '10px',
-    width: '900px',
+    width: '600px',
     gap: '10px',
   } as const,
   titleInput: {
@@ -45,15 +44,15 @@ function NoteForm({
   data: NoteType
 }) {
   const [ values, setValues ] = useState<NoteType>(data);
+  const noteStore = useRecoilValue(NoteStore);
   const queryClient = useQueryClient();
   const { mutate } = useUpdateNote();
-  const { editor } = useCurrentEditor()
 
   const handleUpdate = (newValues: NoteType) => {
     mutate(newValues, {
       onSuccess: () => {
         queryClient.invalidateQueries({
-          queryKey: [NoteQueryKey.Note, values.noteFolderId]
+          queryKey: [NoteQueryKey.Note, noteStore.activeNoteFolderId]
         });
       }
     })
@@ -96,17 +95,10 @@ function NoteForm({
         name="title"
         onChange={handleChange}
       />
-      {/* <Textarea
-        css={Style.descriptionInput}
-        name="content"
-        value={values.content}
-        onChange={handleChange}
-      /> */}
       <CommonEditor 
         value={values.content}
         setValue={handleEditerChange}
       />
-      {/* <TipTap /> */}
     </form>
   );
 };

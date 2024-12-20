@@ -50,7 +50,7 @@ function ListNote({
         <CreateNoteBtn displayType={noteStore.displayType} />
         {
           data?.map((item) => (
-            <Note key={item.id} data={item} displayType={noteStore.displayType} />
+            <Note key={`${item.id}-${noteStore.activeNoteFolderId}`} data={item} displayType={noteStore.displayType} />
           ))
         }
       </SortableContext>

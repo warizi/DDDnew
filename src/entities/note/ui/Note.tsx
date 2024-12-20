@@ -12,7 +12,6 @@ import { TrashIcon } from "@shared/icon";
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 import { CommonEditor } from "@shared/components/editor";
-import { EditorContent } from "@tiptap/react";
 
 const Style = {
   basic: {
@@ -20,10 +19,16 @@ const Style = {
     padding: "15px",
     cursor: "pointer",
     color: "#B4B4B4",
+    overflow: "hidden",
     "&:hover": {
       backgroundColor: "#5C6B8A",
       color: "white"
     }
+  },
+  contentContainer: {
+    width: "90%",
+    borderRadius: "5px",
+    padding: "5px",
   },
   list: {
     display: "flex",
@@ -47,7 +52,10 @@ const Style = {
     backgroundColor: "#5C6B8A",
     border: "1px dashed #B4B4B4",
     opacity: 0.5
-  }
+  } as const,
+  title: {
+    marginBottom: "10px",
+  } as const 
 }
 
 function Note({
@@ -76,6 +84,7 @@ function Note({
       }
     })
   }
+
   const handleOpenModal = () => {
     openModal(
       MODAL_TYPE.SLIDE_RIGHT,
@@ -133,13 +142,18 @@ function Note({
       {...listeners}
       style={style}
     >
-      <span>
+      <span css={{...Style.title}}>
         {title}
       </span>
-      {/* <span>
-        {content}
-      </span> */}
-      <EditorContent editor={null} content={content} disabled/>
+      {
+        displayType === NoteDisplayEnum.GRID && (
+          <div
+            css={{...Style.contentContainer}}
+          >
+            <CommonEditor value={content} setValue={() => {}} readOnly/>
+          </div>
+        )
+      }
     </div>
   );
 };

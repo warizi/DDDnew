@@ -1,19 +1,24 @@
 /** @jsxImportSource @emotion/react */
-
 const Style = {
 }
 
-function CommonMenuBar(editor: any) {
+function CommonMenuBar({
+  editor
+}: {
+  editor: any
+}) {
   if (!editor) {
     return null
   }
+  
   return (
+    editor && 
     <div className="control-group">
       <div className="button-group">
         <button
           onClick={() => editor.chain().focus().toggleBold().run()}
           disabled={
-            !editor.can()
+            !editor?.can()
               .chain()
               .focus()
               .toggleBold()
@@ -26,7 +31,7 @@ function CommonMenuBar(editor: any) {
         <button
           onClick={() => editor.chain().focus().toggleItalic().run()}
           disabled={
-            !editor.can()
+            !editor?.can()
               .chain()
               .focus()
               .toggleItalic()
@@ -39,7 +44,7 @@ function CommonMenuBar(editor: any) {
         <button
           onClick={() => editor.chain().focus().toggleStrike().run()}
           disabled={
-            !editor.can()
+            !editor?.can()
               .chain()
               .focus()
               .toggleStrike()
@@ -52,7 +57,7 @@ function CommonMenuBar(editor: any) {
         <button
           onClick={() => editor.chain().focus().toggleCode().run()}
           disabled={
-            !editor.can()
+            !editor?.can()
               .chain()
               .focus()
               .toggleCode()
@@ -143,7 +148,7 @@ function CommonMenuBar(editor: any) {
         <button
           onClick={() => editor.chain().focus().undo().run()}
           disabled={
-            !editor.can()
+            !editor?.can()
               .chain()
               .focus()
               .undo()
@@ -155,7 +160,7 @@ function CommonMenuBar(editor: any) {
         <button
           onClick={() => editor.chain().focus().redo().run()}
           disabled={
-            !editor.can()
+            !editor?.can()
               .chain()
               .focus()
               .redo()

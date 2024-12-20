@@ -115,7 +115,6 @@ function Todo({
     />
   ]
   const handleOpenModal = () => {
-    console.log("open modal");
     openModal(
       MODAL_TYPE.SLIDE_RIGHT,
       MODAL_KEY.EDIT_TODO,
