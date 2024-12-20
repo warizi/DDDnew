@@ -2,11 +2,12 @@
 
 import { DndContext, DragOverlay } from "@dnd-kit/core";
 import { NoteFolder, NoteStore } from "@entities/note";
-import { CreateNoteFolderBtn, ListNoteFolder } from "@features/note";
+import { CreateNoteFolderBtn, ListNoteFolder, useNoteFolderSortByCate } from "@features/note";
 import { createPortal } from "react-dom";
-import { useRecoilValue } from "recoil";
+import { useRecoilState, useRecoilValue } from "recoil";
 import useNoteFolderDnd from "../model/useNoteFolderDnd";
 import { NoteFolderType } from "@shared/db";
+import { useEffect } from "react";
 
 const Style = {
   container: {
@@ -29,6 +30,7 @@ const Style = {
 
 function NoteSidebar() {
   const { activeNoteCategory } = useRecoilValue(NoteStore);
+  const [ noteStore, setNoteStore ] = useRecoilState(NoteStore);
   const { 
     noteFolderData,
     handleDragEnd,
@@ -36,6 +38,16 @@ function NoteSidebar() {
     sensors,
     activeNoteFolder
   } = useNoteFolderDnd(activeNoteCategory);
+  const data = useNoteFolderSortByCate(activeNoteCategory);
+
+  useEffect(() => {
+    if (data) {
+      setNoteStore({
+        ...noteStore,
+        activeNoteFolderId: data[0]?.id || "",
+      });
+    }
+  }, [data])
 
   return (
     <DndContext onDragStart={handleDragStart} onDragEnd={handleDragEnd} sensors={sensors}>

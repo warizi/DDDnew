@@ -1,4 +1,4 @@
-import { Id } from "@shared/db/model/types";
+import { Id, NoteDisplayEnum } from "@shared/db/model/types";
 import { atom } from "recoil";
 
 export enum NoteCategoryEnum {
@@ -13,8 +13,10 @@ export const NoteStore = atom({
   default: {
     activeNoteCategory: NoteCategoryEnum.PROJECT,
     activeNoteFolderId: "",
+    displayType: NoteDisplayEnum.GRID,
   } as {
     activeNoteCategory: NoteCategoryEnum;
     activeNoteFolderId: Id;
+    displayType: NoteDisplayEnum;
   },
 })

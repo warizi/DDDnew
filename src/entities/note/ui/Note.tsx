@@ -9,29 +9,45 @@ import { useQueryClient } from "@tanstack/react-query";
 import useDeleteNote from "../model/useDeleteNote";
 import { NoteQueryKey } from "../model/NoteQueryKey";
 import { TrashIcon } from "@shared/icon";
+import { useSortable } from "@dnd-kit/sortable";
+import { CSS } from "@dnd-kit/utilities";
+import { CommonEditor } from "@shared/components/editor";
+import { EditorContent } from "@tiptap/react";
 
 const Style = {
   basic: {
     backgroundColor: "#21242A",
-    padding: "10px",
+    padding: "15px",
     cursor: "pointer",
+    color: "#B4B4B4",
+    "&:hover": {
+      backgroundColor: "#5C6B8A",
+      color: "white"
+    }
   },
   list: {
     display: "flex",
     flexDirection: "row",
     width: "100%",
-    height: "35px",
-    lineHeight: "35px",
+    height: "45px",
+    lineHeight: "45px",
     padding: "0 20px",
   } as const,
   grid: {
     display: "flex",
     flexDirection: "column",
-    width: "250px",
+    width: "100%",
+    minWidth: "150px",
+    maxWidth: "250px",
     height: "300px",
     boxShadow: "0 0 10px 0 rgba(0, 0, 0, 0.2)",
     borderRadius: "10px",
-  } as const
+  } as const,
+  isDragging: {
+    backgroundColor: "#5C6B8A",
+    border: "1px dashed #B4B4B4",
+    opacity: 0.5
+  }
 }
 
 function Note({
@@ -79,18 +95,51 @@ function Note({
     e.preventDefault();
     handleContextMenu(e, contextItem);
   }
+
   
+  const { setNodeRef, attributes, listeners, transform, transition, isDragging } = useSortable({
+    id: data.id,
+    data: {
+      type: "note",
+      note: data
+    }
+  });
+
+  const style = {
+    transform: CSS.Transform.toString(transform),
+    transition: transition ?? undefined,
+    // zIndex: isDragging ? 1000 : 10
+  }
+
+  if(isDragging) {
+    return (
+      <div css={{...Style.basic, ...(displayType === NoteDisplayEnum.LIST ? Style.list : Style.grid), ...Style.isDragging}}
+        onContextMenu={handleRightClick}
+        onClick={handleOpenModal}
+        ref={setNodeRef}
+        {...attributes}
+        {...listeners}
+        style={style}
+      >
+      </div>
+    )
+  }
   return (
     <div css={{...Style.basic, ...(displayType === NoteDisplayEnum.LIST ? Style.list : Style.grid)}}
       onContextMenu={handleRightClick}
       onClick={handleOpenModal}
+      ref={setNodeRef}
+      {...attributes}
+      {...listeners}
+      style={style}
     >
       <span>
         {title}
       </span>
-      <span>
+      {/* <span>
         {content}
-      </span>
+      </span> */}
+      <EditorContent editor={null} content={content} disabled/>
     </div>
   );
 };

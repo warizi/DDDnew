@@ -1,5 +1,6 @@
 /** @jsxImportSource @emotion/react */
 
+import { NoteForm } from "@features/note";
 import { MODAL_KEY, ModalStore, SideModal } from "@shared/components/modal";
 import { useRecoilValue } from "recoil";
 
@@ -11,7 +12,9 @@ function EditNoteModal() {
   return (
     <>
       <SideModal modalKey={MODAL_KEY.EDIT_NOTE}>
-        <div></div>
+        <NoteForm 
+          data={modalState.modalData}
+        />
       </SideModal>
     </>
   );

@@ -1,5 +1,6 @@
 /** @jsxImportSource @emotion/react */
 
+import { TipTap } from "@shared/components/editor";
 import { EditNoteModal, NoteContents, NoteSidebar } from "@widgets/note";
 
 const Style = {

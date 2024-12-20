@@ -37,12 +37,15 @@ const Style = {
   grid: {
     display: "flex",
     flexDirection: "column",
-    width: "250px",
+    width: "100%",
+    minWidth: "150px",
+    maxWidth: "250px",
     height: "300px",
     boxShadow: "0 0 10px 0 rgba(0, 0, 0, 0.2)",
     borderRadius: "10px",
     alignItems: "center",
     justifyContent: "center",
+    transform: "scale(0.8)",
   } as const
 }
 

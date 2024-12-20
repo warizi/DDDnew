@@ -1,9 +1,11 @@
 /** @jsxImportSource @emotion/react */
 
-import { NoteStore } from "@entities/note";
-import { ListNote } from "@features/note";
+import { Note, NoteStore } from "@entities/note";
+import { ListNote, NoteControlBar } from "@features/note";
 import { useRecoilValue } from "recoil";
 import useNoteDnd from "../model/useNoteDnd";
+import { DndContext, DragOverlay } from "@dnd-kit/core";
+import { createPortal } from "react-dom";
 
 const Style = {
   container: {
@@ -14,15 +16,34 @@ const Style = {
 }
 
 function NoteContents() {
-  const { activeNoteFolderId } = useRecoilValue(NoteStore);
+  const { activeNoteFolderId, displayType } = useRecoilValue(NoteStore);
   const {
     noteList,
+    activeNote,
+    sensors,
+    handleDragStart,
+    handleDragEnd
   } = useNoteDnd(activeNoteFolderId);
 
   return (
-    <div css={{...Style.container}}>
-      <ListNote data={noteList} />
-    </div>
+    <DndContext onDragStart={handleDragStart} onDragEnd={handleDragEnd} sensors={sensors}>
+      <div css={{...Style.container}}>
+        <NoteControlBar />
+        <ListNote data={noteList} />
+      </div>
+      {
+        createPortal(
+          <DragOverlay>
+            {
+              activeNote && (
+                <Note data={activeNote} displayType={displayType} />
+              )
+            }
+          </DragOverlay>,
+          document.body
+        )
+      }
+    </DndContext>
   );
 };
 

@@ -45,6 +45,7 @@ function NoteCategory({ isActive }: { isActive: boolean }) {
   const [ noteStore, setNoteStore ] = useRecoilState(NoteStore);
   const [height, setHeight] = useState<number | undefined>(0);
   const ref = useRef<HTMLUListElement>(null);
+  
 
   const returnActiveStyle = (cate: NoteCategoryEnum) => {
     return noteStore.activeNoteCategory === cate ? { backgroundColor: "#5C6B8A" } : {};
